@@ -1,6 +1,6 @@
 # GTContactsKit
 
-[![CI Status](http://img.shields.io/travis/gtranchedone/GTContactsKit.svg?style=flat)](https://travis-ci.org/gtrnachedone/GTContactsKit)
+[![CI Status](http://img.shields.io/travis/gtranchedone/GTContactsKit.svg?style=flat)](https://travis-ci.org/gtranchedone/GTContactsKit)
 [![Version](https://img.shields.io/cocoapods/v/GTContactsKit.svg?style=flat)](http://cocoadocs.org/docsets/GTContactsKit)
 [![License](https://img.shields.io/cocoapods/l/GTContactsKit.svg?style=flat)](http://cocoadocs.org/docsets/GTContactsKit)
 [![Platform](https://img.shields.io/cocoapods/p/GTContactsKit.svg?style=flat)](http://cocoadocs.org/docsets/GTContactsKit)
