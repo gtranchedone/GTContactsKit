@@ -1,5 +1,5 @@
 //
-//  main.m
+//  GTPersonTableViewCell.h
 //  GTContactsKit
 //
 //  The MIT License (MIT)
@@ -26,11 +26,5 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GTAppDelegate.h"
-
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GTAppDelegate class]));
-    }
-}
+@interface GTPersonTableViewCell : UITableViewCell
+@end

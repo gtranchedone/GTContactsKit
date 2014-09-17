@@ -5,11 +5,21 @@
 [![License](https://img.shields.io/cocoapods/l/GTContactsKit.svg?style=flat)](http://cocoadocs.org/docsets/GTContactsKit)
 [![Platform](https://img.shields.io/cocoapods/p/GTContactsKit.svg?style=flat)](http://cocoadocs.org/docsets/GTContactsKit)
 
+GTContactsKit is a set of classes for fetching, displaying and selecting contacts from the AddressBook.
+
+## TODO
+
+- [ ] Add Unit and Integration Tests
+- [ ] Add documentation in header files
+- [ ] Add GIF to show GTContactsPickerController styles
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
+
+iOS 7+
 
 ## Installation
 
