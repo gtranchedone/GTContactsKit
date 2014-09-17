@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.version          = "0.1.0"
   s.summary          = "A set of classes for fetching, displaying and selecting contacts from the AddressBook."
   s.description      = <<-DESC
-                       A set of classes for fetching, displaying and selecting contacts from the AddressBook.
+                       A set of classes for fetching, displaying and selecting contacts from the AddressBook. GTContactsPicker lets you fetch the information and GTContactsPickerController lets you display them and select them using different view styles.
                        DESC
   s.homepage         = "https://github.com/gtranchedone/GTContactsKit"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
