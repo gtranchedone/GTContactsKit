@@ -64,7 +64,6 @@
         tokenField.dataSource = self;
         tokenField.delegate = self;
         headerView = tokenField;
-        [tokenField becomeFirstResponder];
         [self setTokenField:tokenField];
     }
 
@@ -72,6 +71,12 @@
     [self.tableView setRowHeight:60.0f];
     [self reloadContacts];
     [self _updateView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tokenField becomeFirstResponder];
 }
 
 #pragma mark - Public APIs -
@@ -102,11 +107,11 @@
     self.title = @"Contacts";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                            target:self
-                                                                                           action:@selector(_cancel)];
+                                                                                           action:@selector(_finish)];
     if (self.allowsCancellation) {
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                       target:self
-                                                                                      action:@selector(_finish)];
+                                                                                      action:@selector(_cancel)];
         self.navigationItem.leftBarButtonItem = cancelButton;
     }
 }
