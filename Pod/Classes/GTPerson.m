@@ -1,5 +1,5 @@
 //
-//  main.m
+//  GTPerson.m
 //  GTContactsKit
 //
 //  The MIT License (MIT)
@@ -24,13 +24,32 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import "GTPerson.h"
 
-#import "GTAppDelegate.h"
+@implementation GTPerson
 
-int main(int argc, char * argv[])
+- (NSString *)fullName
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GTAppDelegate class]));
+    NSString *fullName = self.firstName;
+    if (self.firstName && self.lastName) {
+        fullName = [self.firstName stringByAppendingFormat:@" %@", self.lastName];
     }
+    return fullName;
 }
+
+- (NSUInteger)hash
+{
+    return [self.fullName hash];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    BOOL isEqual = [super isEqual:object];
+    if (!isEqual && [object isKindOfClass:[GTPerson class]]) {
+        isEqual = ([self.fullName isEqual:[object fullName]] &&
+                   [self.emailAddresses isEqualToArray:[object emailAddresses]]);
+    }
+    return isEqual;
+}
+
+@end

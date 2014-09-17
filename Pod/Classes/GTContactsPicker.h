@@ -1,5 +1,5 @@
 //
-//  main.m
+//  GTContactsPicker.h
 //  GTContactsKit
 //
 //  The MIT License (MIT)
@@ -24,13 +24,16 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <AddressBook/AddressBook.h>
 
-#import "GTAppDelegate.h"
+@interface GTContactsPicker : NSObject
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GTAppDelegate class]));
-    }
-}
+@property (nonatomic, assign) ABAddressBookRef addressBook;
+
+- (ABAuthorizationStatus)addressBookAuthorizationStatus;
+- (void)fetchContactsWithCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock;
+
+@end
+
+FOUNDATION_EXTERN NSString * const GTContactsPickerErrorDomain;

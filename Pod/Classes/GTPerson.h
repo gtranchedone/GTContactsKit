@@ -1,5 +1,5 @@
 //
-//  main.m
+//  GTPerson.h
 //  GTContactsKit
 //
 //  The MIT License (MIT)
@@ -24,13 +24,16 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-#import "GTAppDelegate.h"
+@interface GTPerson : NSObject
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GTAppDelegate class]));
-    }
-}
+@property (nonatomic, copy) NSString *lastName;
+@property (nonatomic, copy) NSString *firstName;
+@property (nonatomic, readonly) NSString *fullName;
+@property (nonatomic, strong) UIImage *profileImage;
+
+@property (nonatomic, copy) NSArray *emailAddresses;
+@property (nonatomic, copy) NSArray *phoneNumbers;
+
+@end

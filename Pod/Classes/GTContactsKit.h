@@ -1,10 +1,10 @@
 //
-//  main.m
+//  GTContactsKit.h
 //  GTContactsKit
 //
 //  The MIT License (MIT)
 //
-//  Copyright (c) 2014 Gianluca Tranchedone (@gtranchedone)
+//  Copyright (c) 2014 Gianluca Tranchedone
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -24,13 +24,7 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-
-#import "GTAppDelegate.h"
-
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GTAppDelegate class]));
-    }
-}
+#import <GTContactsKit/GTPerson.h>
+#import <GTContactsKit/GTContactsPicker.h>
+#import <GTContactsKit/GTPersonTableViewCell.h>
+#import <GTContactsKit/GTContactsPickerViewController.h>

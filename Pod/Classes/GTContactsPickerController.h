@@ -1,5 +1,5 @@
 //
-//  main.m
+//  GTContactsPickerController.h
 //  GTContactsKit
 //
 //  The MIT License (MIT)
@@ -26,11 +26,34 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GTAppDelegate.h"
+@class GTPerson;
+@class GTContactsPicker;
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GTAppDelegate class]));
-    }
-}
+typedef NS_ENUM(NSInteger, GTContactsPickerStyle) {
+    GTContactsPickerStyleDefault,
+    GTContactsPickerStyleMail
+};
+
+@protocol GTContactsPickerControllerDelegate;
+
+@interface GTContactsPickerController : UITableViewController <UISearchBarDelegate>
+
+@property (nonatomic, weak) id<GTContactsPickerControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL allowsCancellation;
+
+@property (nonatomic, copy) NSArray *contacts;
+@property (nonatomic, strong) GTContactsPicker *contactsPicker;
+@property (nonatomic, assign) GTContactsPickerStyle pickerStyle;
+
+- (instancetype)initWithStyle:(UITableViewStyle)style pickerStyle:(GTContactsPickerStyle)pickerStyle;
+- (void)selectContactAtIndex:(NSUInteger)index;
+- (NSArray *)selectedContacts;
+
+@end
+
+@protocol GTContactsPickerControllerDelegate <NSObject>
+
+@optional
+- (void)contactsPickerController:(GTContactsPickerController *)controller didFinishWithContacts:(NSArray *)pickedContacts;
+
+@end
