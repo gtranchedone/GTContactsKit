@@ -27,4 +27,4 @@
 #import <GTContactsKit/GTPerson.h>
 #import <GTContactsKit/GTContactsPicker.h>
 #import <GTContactsKit/GTPersonTableViewCell.h>
-#import <GTContactsKit/GTContactsPickerViewController.h>
+#import <GTContactsKit/GTContactsPickerController.h>
