@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "GTContactsKit"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "A set of classes for fetching, displaying and selecting contacts from the AddressBook."
   s.description      = <<-DESC
                        A set of classes for fetching, displaying and selecting contacts from the AddressBook. GTContactsPicker lets you fetch the information and GTContactsPickerController lets you display them and select them using different view styles.
