@@ -25,14 +25,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GTContactDefines.h"
 
 @class GTPerson;
 @class GTContactsPicker;
-
-typedef NS_ENUM(NSInteger, GTContactsPickerStyle) {
-    GTContactsPickerStyleDefault,
-    GTContactsPickerStyleMail
-};
 
 @protocol GTContactsPickerControllerDelegate;
 

@@ -41,6 +41,14 @@
 }
 
 #pragma mark - Public APIs -
+- (instancetype)initWithPickerStyle:(GTContactsPickerStyle)pickerStyle
+{
+    self = [super init];
+    if (self) {
+        _pickerStyle = pickerStyle;
+    }
+    return self;
+}
 
 - (ABAuthorizationStatus)addressBookAuthorizationStatus
 {
@@ -119,16 +127,47 @@
                 person.firstName = firstName;
             }
             
-            person.emailAddresses = [self emailAddressesForRecord:record];
-            person.phoneNumbers = [self phoneNumbersForRecord:record];
-            
-            [formattedPeople addObject:person];
+            if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
+                [formattedPeople addObjectsFromArray:[self sinGularEmailAddressesForRecord:record
+                                                                                  ofPerson:person]];
+            }
+            else {
+                person.emailAddresses = [self emailAddressesForRecord:record];
+                person.phoneNumbers = [self phoneNumbersForRecord:record];
+                
+                [formattedPeople addObject:person];
+            }
         }
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             completionBlock(formattedPeople, nil);
         }];
     }
+}
+
+- (NSArray *)sinGularEmailAddressesForRecord:(ABRecordRef)record ofPerson:(GTPerson*)personCurrent{
+    
+    ABMultiValueRef emails = ABRecordCopyValue(record, kABPersonEmailProperty);
+    CFIndex emailsCount = ABMultiValueGetCount(emails);
+    NSMutableArray *personSingularEmail = [NSMutableArray arrayWithCapacity:(NSUInteger)emailsCount];
+    
+    for (CFIndex i = 0; i < emailsCount; i++) {
+        GTPerson *person = [[GTPerson alloc] init];
+        person.firstName = personCurrent.firstName;
+        person.lastName = personCurrent.lastName;
+        person.phoneNumbers = [self phoneNumbersForRecord:record];
+        
+        NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
+        
+        NSMutableArray *emailAddresses = [NSMutableArray arrayWithCapacity:1];
+        [emailAddresses addObject:email];
+        
+        person.emailAddresses = emailAddresses;
+    }
+    
+    CFRelease(emails);
+    
+    return [personSingularEmail copy];
 }
 
 - (NSArray *)emailAddressesForRecord:(ABRecordRef)record

@@ -56,7 +56,7 @@
         searchBar.delegate = self;
         headerView = searchBar;
     }
-    else if (self.pickerStyle == GTContactsPickerStyleMail) {
+    else if (self.pickerStyle == GTContactsPickerStyleMail || self.pickerStyle == GTContactsPickerStyleSingularEmail) {
         VENTokenField *tokenField = [[VENTokenField alloc] initWithFrame:headerViewFrame];
         [tokenField setColorScheme:[UIApplication sharedApplication].delegate.window.tintColor];
         tokenField.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -186,6 +186,7 @@
 
     GTPerson *person = [self personAtIndexPath:indexPath];
     cell.textLabel.text = person.fullName;
+    cell.detailTextLabel.text = self.pickerStyle == GTContactsPickerStyleSingularEmail ? [person.emailAddresses firstObject] : @"";
     cell.imageView.image = person.profileImage;
     cell.accessoryType = [self didSelectContact:person] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
@@ -335,7 +336,7 @@
 - (GTContactsPicker *)contactsPicker
 {
     if (!_contactsPicker) {
-        self.contactsPicker = [[GTContactsPicker alloc] init];
+        self.contactsPicker = [[GTContactsPicker alloc] initWithPickerStyle:self.pickerStyle];
     }
     return _contactsPicker;
 }
