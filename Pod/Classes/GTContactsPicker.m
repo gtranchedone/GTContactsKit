@@ -163,6 +163,7 @@
         person.profileImage = personCurrent.profileImage;
         
         NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
+        [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         NSMutableArray *emailAddresses = [NSMutableArray arrayWithCapacity:1];
         [emailAddresses addObject:email];
@@ -189,6 +190,8 @@
     
     for (CFIndex i = 0; i < emailsCount; i++) {
         NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
+        [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
         [emailAddresses addObject:email];
     }
     
