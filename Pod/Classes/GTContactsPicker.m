@@ -135,6 +135,10 @@
                 person.emailAddresses = [self emailAddressesForRecord:record];
                 person.phoneNumbers = [self phoneNumbersForRecord:record];
                 
+                if (person.emailAddresses.count > 0) {
+                    person.emailAddress = [person.emailAddresses firstObject];
+                }
+                
                 [formattedPeople addObject:person];
             }
         }
@@ -164,6 +168,10 @@
         [emailAddresses addObject:email];
         
         person.emailAddresses = emailAddresses;
+        
+        if (person.emailAddresses.count > 0) {
+            person.emailAddress = [person.emailAddresses firstObject];
+        }
         
         [personSingularEmail addObject:person];
     }

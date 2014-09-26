@@ -30,6 +30,7 @@
 
 @property (nonatomic, copy) NSString *lastName;
 @property (nonatomic, copy) NSString *firstName;
+@property (nonatomic, copy) NSString *emailAddress;
 @property (nonatomic, readonly) NSString *fullName;
 @property (nonatomic, strong) UIImage *profileImage;
 

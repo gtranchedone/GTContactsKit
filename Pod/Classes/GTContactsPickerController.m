@@ -141,13 +141,20 @@
 - (void)filterListWithSearchString:(NSString *)searchString
 {
     if (searchString.length) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@", searchString];
-        self.searchResults = [self.contacts filteredArrayUsingPredicate:predicate];
+        if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@ OR emailAddress CONTAINS[cd] %@", searchString,searchString];
+            self.searchResults = [self.contacts filteredArrayUsingPredicate:predicate];
+        }
+        else {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@", searchString];
+            self.searchResults = [self.contacts filteredArrayUsingPredicate:predicate];
+        }
     }
     else {
         self.searchResults = self.contacts;
     }
     [self.tableView reloadData];
+
 }
 
 - (NSArray *)peopleWithName:(NSString *)name
