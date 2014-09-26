@@ -57,14 +57,24 @@
     }
 
     CGRect textFrame = self.textLabel.frame;
+    
     textFrame.origin.x = CGRectGetMaxX(self.imageView.frame) + horizontalDistance;
     textFrame.size.width = CGRectGetWidth(self.contentView.bounds) - textFrame.origin.x - horizontalDistance;
-
+    
+    CGRect textDetailFrame = self.detailTextLabel.frame;
+    
+    textDetailFrame.origin.x = CGRectGetMaxX(self.imageView.frame) + horizontalDistance;
+    textDetailFrame.size.width = CGRectGetWidth(self.contentView.bounds) - textFrame.origin.x - horizontalDistance;
+    
+    
     if (self.accessoryView) {
         textFrame.size.width -= (horizontalDistance + CGRectGetWidth(self.accessoryView.bounds));
+        textDetailFrame.size.width -= (horizontalDistance + CGRectGetWidth(self.accessoryView.bounds));
     }
-
+    
     self.textLabel.frame = textFrame;
+    self.detailTextLabel.frame = textDetailFrame;
+
     self.separatorInset = UIEdgeInsetsMake(0, CGRectGetMinX(textFrame), 0, 0);
 }
 
