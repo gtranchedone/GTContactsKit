@@ -180,8 +180,15 @@
     static NSString * const GTContactsPickerControllerCellIdentifier = @"GTContactsPickerControllerCellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GTContactsPickerControllerCellIdentifier];
     if (!cell) {
-        cell = [[GTPersonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                            reuseIdentifier:GTContactsPickerControllerCellIdentifier];
+        if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
+            cell = [[GTPersonTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                                reuseIdentifier:GTContactsPickerControllerCellIdentifier];
+        }
+        else {
+            cell = [[GTPersonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                reuseIdentifier:GTContactsPickerControllerCellIdentifier];
+        }
+        
     }
 
     GTPerson *person = [self personAtIndexPath:indexPath];
