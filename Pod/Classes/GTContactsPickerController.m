@@ -58,7 +58,7 @@
     }
     else if (self.pickerStyle == GTContactsPickerStyleMail || self.pickerStyle == GTContactsPickerStyleSingularEmail) {
         VENTokenField *tokenField = [[VENTokenField alloc] initWithFrame:headerViewFrame];
-        [tokenField setColorScheme:[UIApplication sharedApplication].delegate.window.tintColor];
+        [tokenField setColorScheme:self.view.tintColor];
         tokenField.layer.borderColor = [UIColor lightGrayColor].CGColor;
         tokenField.layer.borderWidth = 1;
         tokenField.dataSource = self;
