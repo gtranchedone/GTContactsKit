@@ -163,6 +163,8 @@
         [emailAddresses addObject:email];
         
         person.emailAddresses = emailAddresses;
+        
+        [personSingularEmail addObject:person];
     }
     
     CFRelease(emails);
