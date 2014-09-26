@@ -156,6 +156,7 @@
         person.firstName = personCurrent.firstName;
         person.lastName = personCurrent.lastName;
         person.phoneNumbers = [self phoneNumbersForRecord:record];
+        person.profileImage = personCurrent.profileImage;
         
         NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
         
