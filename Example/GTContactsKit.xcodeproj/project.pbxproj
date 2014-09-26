@@ -485,7 +485,7 @@
 				GCC_PREFIX_HEADER = "GTContactsKit/GTContactsKit-Prefix.pch";
 				INFOPLIST_FILE = "GTContactsKit/GTContactsKit-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "arm64 armv7 armv7s i386";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -500,7 +500,7 @@
 				GCC_PREFIX_HEADER = "GTContactsKit/GTContactsKit-Prefix.pch";
 				INFOPLIST_FILE = "GTContactsKit/GTContactsKit-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "arm64 armv7 armv7s i386";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
