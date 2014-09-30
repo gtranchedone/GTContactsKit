@@ -116,6 +116,17 @@
     }
 }
 
+- (void)_dismissKeyboard{
+    if (self.pickerStyle == GTContactsPickerStyleDefault) {
+        UISearchBar *searchBar = (UISearchBar*)self.tableView.tableHeaderView;
+        [searchBar resignFirstResponder];
+        
+    }
+    else if (self.pickerStyle == GTContactsPickerStyleMail || self.pickerStyle == GTContactsPickerStyleSingularEmail){
+        [self.tokenField resignFirstResponder];
+    }
+}
+
 - (void)_cancel
 {
     [self setPickedContacts:nil];
@@ -124,6 +135,8 @@
 
 - (void)_finish
 {
+    [self _dismissKeyboard];
+    
     if ([self.delegate respondsToSelector:@selector(contactsPickerController:didFinishWithContacts:)]) {
         [self.delegate contactsPickerController:self didFinishWithContacts:self.pickedContacts];
     }
