@@ -83,6 +83,25 @@
     }
 }
 
+- (void)fetchContactEmailsForEmail:(NSString*)email withCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock{
+    
+    __weak typeof(self) weakSelf = self;
+    [weakSelf fetchContactsWithCompletionBlock:^(NSArray *array, NSError *error) {
+        if (error) {
+            completionBlock(nil,error);
+        }
+        else if (completionBlock){
+            NSMutableArray *emails = [NSMutableArray array];
+            for (GTPerson *person in array) {
+                if ([person.emailAddresses containsObject:email]) {
+                    [emails addObjectsFromArray:person.emailAddresses];
+                }
+            }
+            completionBlock ([emails mutableCopy],nil);
+        }
+    }];
+}
+
 - (void)requestAddressBookAccessAuthorizationWithCompletion:(void (^)(NSArray *, NSError *))completionBlock
 {
     __weak typeof(self) weakSelf = self;
