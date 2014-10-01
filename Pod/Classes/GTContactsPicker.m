@@ -83,7 +83,7 @@
     }
 }
 
-- (void)fetchContactEmailsForEmail:(NSArray*)emails withCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock{
+- (void)fetchContactEmailsForEmail:(NSArray*)userEmails withCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock{
     
     __weak typeof(self) weakSelf = self;
     [weakSelf fetchContactsWithCompletionBlock:^(NSArray *array, NSError *error) {
@@ -93,8 +93,8 @@
         else if (completionBlock){
             NSMutableArray *emails = [NSMutableArray array];
             for (GTPerson *person in array) {
-                for (int pIndex = 0; pIndex<emails.count; pIndex++) {
-                    NSString *pEmail = [emails objectAtIndex:pIndex];
+                for (int pIndex = 0; pIndex<userEmails.count; pIndex++) {
+                    NSString *pEmail = [userEmails objectAtIndex:pIndex];
                     
                     if ([person.emailAddresses containsObject:pEmail]) {
                         [emails addObjectsFromArray:person.emailAddresses];
@@ -102,7 +102,6 @@
                         continue;
                     }
                 }
-                
             }
             completionBlock ([emails mutableCopy],nil);
         }
