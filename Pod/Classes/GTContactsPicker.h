@@ -36,7 +36,7 @@
 - (instancetype)initWithPickerStyle:(GTContactsPickerStyle)pickerStyle;
 - (ABAuthorizationStatus)addressBookAuthorizationStatus;
 - (void)fetchContactsWithCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock;
-- (void)fetchContactEmailsForEmail:(NSString*)email withCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock;
+- (void)fetchContactEmailsForEmail:(NSArray*)emails withCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock;
 
 @end
 
