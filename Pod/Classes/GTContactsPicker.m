@@ -37,7 +37,9 @@
 
 - (void)dealloc
 {
-    CFRelease(self.addressBook);
+    if (self.addressBook) {
+        CFRelease(self.addressBook);
+    }
 }
 
 #pragma mark - Public APIs -
