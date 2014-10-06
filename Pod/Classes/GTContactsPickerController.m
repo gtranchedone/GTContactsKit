@@ -56,9 +56,9 @@
         searchBar.delegate = self;
         headerView = searchBar;
     }
-    else if (self.pickerStyle == GTContactsPickerStyleMail) {
+    else if (self.pickerStyle == GTContactsPickerStyleMail || self.pickerStyle == GTContactsPickerStyleSingularEmail) {
         VENTokenField *tokenField = [[VENTokenField alloc] initWithFrame:headerViewFrame];
-        [tokenField setColorScheme:[UIApplication sharedApplication].delegate.window.tintColor];
+        [tokenField setColorScheme:self.view.tintColor];
         tokenField.layer.borderColor = [UIColor lightGrayColor].CGColor;
         tokenField.layer.borderWidth = 1;
         tokenField.dataSource = self;
@@ -116,6 +116,17 @@
     }
 }
 
+- (void)_dismissKeyboard{
+    if (self.pickerStyle == GTContactsPickerStyleDefault) {
+        UISearchBar *searchBar = (UISearchBar*)self.tableView.tableHeaderView;
+        [searchBar resignFirstResponder];
+        
+    }
+    else if (self.pickerStyle == GTContactsPickerStyleMail || self.pickerStyle == GTContactsPickerStyleSingularEmail){
+        [self.tokenField resignFirstResponder];
+    }
+}
+
 - (void)_cancel
 {
     [self setPickedContacts:nil];
@@ -124,6 +135,8 @@
 
 - (void)_finish
 {
+    [self _dismissKeyboard];
+    
     if ([self.delegate respondsToSelector:@selector(contactsPickerController:didFinishWithContacts:)]) {
         [self.delegate contactsPickerController:self didFinishWithContacts:self.pickedContacts];
     }
@@ -141,13 +154,20 @@
 - (void)filterListWithSearchString:(NSString *)searchString
 {
     if (searchString.length) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@", searchString];
-        self.searchResults = [self.contacts filteredArrayUsingPredicate:predicate];
+        if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@ OR emailAddress CONTAINS[cd] %@", searchString,searchString];
+            self.searchResults = [self.contacts filteredArrayUsingPredicate:predicate];
+        }
+        else {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@", searchString];
+            self.searchResults = [self.contacts filteredArrayUsingPredicate:predicate];
+        }
     }
     else {
         self.searchResults = self.contacts;
     }
     [self.tableView reloadData];
+
 }
 
 - (NSArray *)peopleWithName:(NSString *)name
@@ -180,12 +200,20 @@
     static NSString * const GTContactsPickerControllerCellIdentifier = @"GTContactsPickerControllerCellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GTContactsPickerControllerCellIdentifier];
     if (!cell) {
-        cell = [[GTPersonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                            reuseIdentifier:GTContactsPickerControllerCellIdentifier];
+        if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
+            cell = [[GTPersonTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                                reuseIdentifier:GTContactsPickerControllerCellIdentifier];
+        }
+        else {
+            cell = [[GTPersonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                reuseIdentifier:GTContactsPickerControllerCellIdentifier];
+        }
+        
     }
 
     GTPerson *person = [self personAtIndexPath:indexPath];
     cell.textLabel.text = person.fullName;
+    cell.detailTextLabel.text = self.pickerStyle == GTContactsPickerStyleSingularEmail ? [person.emailAddresses firstObject] : @"";
     cell.imageView.image = person.profileImage;
     cell.accessoryType = [self didSelectContact:person] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
@@ -335,7 +363,7 @@
 - (GTContactsPicker *)contactsPicker
 {
     if (!_contactsPicker) {
-        self.contactsPicker = [[GTContactsPicker alloc] init];
+        self.contactsPicker = [[GTContactsPicker alloc] initWithPickerStyle:self.pickerStyle];
     }
     return _contactsPicker;
 }

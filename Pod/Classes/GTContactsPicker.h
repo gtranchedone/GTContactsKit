@@ -26,13 +26,17 @@
 
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
+#import "GTContactDefines.h"
 
 @interface GTContactsPicker : NSObject
 
 @property (nonatomic, assign) ABAddressBookRef addressBook;
+@property (nonatomic, assign) GTContactsPickerStyle pickerStyle;
 
+- (instancetype)initWithPickerStyle:(GTContactsPickerStyle)pickerStyle;
 - (ABAuthorizationStatus)addressBookAuthorizationStatus;
 - (void)fetchContactsWithCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock;
+- (void)fetchContactEmailsForEmail:(NSArray*)userEmails withCompletionBlock:(void (^)(NSArray *, NSError *))completionBlock;
 
 @end
 

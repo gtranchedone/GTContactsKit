@@ -1,9 +1,9 @@
 target 'GTContactsKit', :exclusive => true do
-  pod "GTContactsKit", :path => "../"
+  pod "GTContactsKit", :path => "https://github.com/arsalananwar/GTContactsKit.git"
 end
 
 target 'Tests', :exclusive => true do
-  pod "GTContactsKit", :path => "../"
+  pod "GTContactsKit", :path => "https://github.com/arsalananwar/GTContactsKit.git"
 
   pod 'Specta', '~> 0.2.1'
   pod 'Expecta'
