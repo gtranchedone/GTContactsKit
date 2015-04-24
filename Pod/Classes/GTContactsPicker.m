@@ -144,16 +144,16 @@
             }
             
             id firstName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
-            person.firstName = firstName;
             
             id lastName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
-            person.lastName = lastName;
 
             if (!firstName && !lastName) {
-                firstName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonOrganizationProperty));
-                person.firstName = firstName;
+                firstName = CFBridgingRelease(ABRecordCopyCompositeName(record));
             }
-            
+
+            person.firstName = firstName;
+            person.lastName = lastName;
+
             if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
                 [formattedPeople addObjectsFromArray:[self sinGularEmailAddressesForRecord:record
                                                                                   ofPerson:person]];
