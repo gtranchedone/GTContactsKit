@@ -134,45 +134,48 @@
         NSArray *allPeople = (__bridge NSArray *)people;
         NSMutableArray *formattedPeople = [NSMutableArray arrayWithCapacity:allPeople.count];
         
-        for (id object in allPeople) {
-            GTPerson *person = [[GTPerson alloc] init];
-            ABRecordRef record = (__bridge ABRecordRef)(object);
-            if (ABPersonHasImageData(record)) {
-                CFDataRef data = ABPersonCopyImageDataWithFormat(record,kABPersonImageFormatThumbnail);
-                person.profileImage = [UIImage imageWithData:(__bridge NSData *)data];
-                CFRelease(data);
-            }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            id firstName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
-            
-            id lastName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
-
-            if (!firstName && !lastName) {
-                firstName = CFBridgingRelease(ABRecordCopyCompositeName(record));
-            }
-
-            person.firstName = firstName;
-            person.lastName = lastName;
-
-            if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
-                [formattedPeople addObjectsFromArray:[self sinGularEmailAddressesForRecord:record
-                                                                                  ofPerson:person]];
-            }
-            else {
-                person.emailAddresses = [self emailAddressesForRecord:record];
-                person.phoneNumbers = [self phoneNumbersForRecord:record];
-                
-                if (person.emailAddresses.count > 0) {
-                    person.emailAddress = [person.emailAddresses firstObject];
+            for (id object in allPeople) {
+                GTPerson *person = [[GTPerson alloc] init];
+                ABRecordRef record = (__bridge ABRecordRef)(object);
+                if (ABPersonHasImageData(record)) {
+                    CFDataRef data = ABPersonCopyImageDataWithFormat(record,kABPersonImageFormatThumbnail);
+                    person.profileImage = [UIImage imageWithData:(__bridge NSData *)data];
+                    CFRelease(data);
                 }
                 
-                [formattedPeople addObject:person];
+                id firstName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonFirstNameProperty));
+                
+                id lastName = CFBridgingRelease(ABRecordCopyValue(record, kABPersonLastNameProperty));
+                
+                if (!firstName && !lastName) {
+                    firstName = CFBridgingRelease(ABRecordCopyCompositeName(record));
+                }
+                
+                person.firstName = firstName;
+                person.lastName = lastName;
+                
+                if (self.pickerStyle == GTContactsPickerStyleSingularEmail) {
+                    [formattedPeople addObjectsFromArray:[self sinGularEmailAddressesForRecord:record
+                                                                                      ofPerson:person]];
+                }
+                else {
+                    person.emailAddresses = [self emailAddressesForRecord:record];
+                    person.phoneNumbers = [self phoneNumbersForRecord:record];
+                    
+                    if (person.emailAddresses.count > 0) {
+                        person.emailAddress = [person.emailAddresses firstObject];
+                    }
+                    
+                    [formattedPeople addObject:person];
+                }
             }
-        }
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            completionBlock(formattedPeople, nil);
-        }];
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                completionBlock(formattedPeople, nil);
+            }];
+        });
     }
 }
 
